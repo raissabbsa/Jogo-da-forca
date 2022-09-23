@@ -9,12 +9,15 @@ import forca5 from "./assets/forca5.png";
 import forca6 from "./assets/forca6.png";
 
 let palavraEscolhida;
+let palavraEspacada=[];
 let errou=0;
+let acertou=0;
 
 export default function App() {
 
     const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     const [colocaTraco, setColoca]=React.useState([" "]);
+    const [classeTraco,setClasse]=React.useState("visivel")
     const [clicados, setClicados] = React.useState([]);
     let [img,setImg] = React.useState(forca0)
 
@@ -39,6 +42,7 @@ export default function App() {
         let arrayPalavra = [];
         for (let i = 0; i < palavra.length; i++) {
             arrayPalavra[i] = palavra[i];
+            palavraEspacada[i]=palavra[i]+" ";
         }
         return arrayPalavra;
     }
@@ -66,11 +70,17 @@ export default function App() {
             for(let i=0;i<palavraEscolhida.length;i++){
                 if(letra === palavraEscolhida[i]){
                     novoArray[i]=letra+" ";
-                    
+                    acertou++;
+                    console.log(acertou)
                 }
             
             }
             setColoca(novoArray)
+            console.log(novoArray)
+            console.log(palavraEspacada)
+            if(acertou === palavraEscolhida.length){
+                fimJogo("ganhou")
+            }
         }
         else{
             errou++;
@@ -91,9 +101,27 @@ export default function App() {
             }
             else if(errou===6){
                 setImg(forca6)
+                fimJogo("perdeu")
             }            
         }
 
+    }
+
+    function fimJogo(estado){
+        setColoca(palavraEspacada)
+
+        let novoclicado=[];
+        for(let i=0; i<26; i++){
+            novoclicado[i] = " "
+        }
+        setClicados(novoclicado)
+        
+        if(estado === "perdeu"){
+            setClasse("errou")
+        }
+        else{
+            setClasse("ganhou")
+        }
     }
 
     return (
@@ -102,7 +130,7 @@ export default function App() {
                 <img src={img} alt="" />
                 <div className="esquerda">
                     <button onClick={escolhePalavra}>Escolher Palavra</button>
-                    <div className="visivel">
+                    <div className={classeTraco}>
                         {colocaTraco.map((t, i) => (
                             <span key={i}>{t}</span>
                         ))}</div>

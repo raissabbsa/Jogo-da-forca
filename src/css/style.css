@@ -12,9 +12,8 @@ main {
 }
 
 main img {
-    height: 400px;
+    height: 350px;
 }
-
 
 main button {
     cursor: pointer;
@@ -103,6 +102,21 @@ main button {
 }
 
 .visivel {
+    margin-top: 200px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+.errou{
+    color: red;
+    margin-top: 200px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.ganhou{
+    color: green;
     margin-top: 200px;
     font-weight: bold;
     font-size: 20px;

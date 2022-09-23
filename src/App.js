@@ -1,31 +1,38 @@
 import React from "react";
 import palavras from "./palavras";
 import forca0 from "./assets/forca0.png";
+import forca1 from "./assets/forca1.png";
+import forca2 from "./assets/forca2.png";
+import forca3 from "./assets/forca3.png";
+import forca4 from "./assets/forca4.png";
+import forca5 from "./assets/forca5.png";
+import forca6 from "./assets/forca6.png";
 
 let palavraEscolhida;
+let errou=0;
 
 export default function App() {
 
     const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-    const [habilitaBotao, setBotao] = React.useState("desabilitado");
     const [colocaTraco, setColoca]=React.useState([" "]);
-    
+    const [clicados, setClicados] = React.useState([]);
+    let [img,setImg] = React.useState(forca0)
 
     function escolhePalavra() {
         let num = Math.floor(Math.random() * palavras.length);
         palavraEscolhida = transformaArray(palavras[num]);
-        console.log(palavraEscolhida)
-        setBotao("habilitado");
+        alert(palavraEscolhida)
+        setClicados(alfabeto)
         ColocaTracos()
     }
 
     function ColocaTracos(){
         let arrayTraco=[];
         for(let i=0;i<palavraEscolhida.length;i++){
-            arrayTraco [i]= "__ ";
-            setColoca(arrayTraco)
+            arrayTraco[i]= "__ ";
+            
         }
-        console.log(arrayTraco)
+        setColoca(arrayTraco)
     }
 
     function transformaArray(palavra) {
@@ -39,20 +46,60 @@ export default function App() {
     function verificaLetra(letra){
         
         let achou=0
+
+        let novoArrayLetra=[...clicados]
+        for(let i=0; i<26;i++){
+            if(letra === novoArrayLetra[i]){
+                novoArrayLetra[i]=" ";
+            }
+        }
+        setClicados(novoArrayLetra)
+        
+        let novoArray=[...colocaTraco];
         for(let i=0;i<palavraEscolhida.length;i++){
             if(palavraEscolhida[i] === letra){
                 achou=1;
             }
         }
         if(achou===1){
-            alert("achouu", letra)
+            
+            for(let i=0;i<palavraEscolhida.length;i++){
+                if(letra === palavraEscolhida[i]){
+                    novoArray[i]=letra+" ";
+                    
+                }
+            
+            }
+            setColoca(novoArray)
         }
+        else{
+            errou++;
+            if(errou === 1){
+                setImg(forca1)
+            }
+            else if(errou===2){
+                setImg(forca2)
+            }
+            else if(errou===3){
+                setImg(forca3)
+            }
+            else if(errou===4){
+                setImg(forca4)
+            }
+            else if(errou===5){
+                setImg(forca5)
+            }
+            else if(errou===6){
+                setImg(forca6)
+            }            
+        }
+
     }
 
     return (
         <>
             <main>
-                <img src={forca0} alt="" />
+                <img src={img} alt="" />
                 <div className="esquerda">
                     <button onClick={escolhePalavra}>Escolher Palavra</button>
                     <div className="visivel">
@@ -63,9 +110,10 @@ export default function App() {
 
             </main>
             <footer>
-                <div className={habilitaBotao}>
-                    {alfabeto.map((letra,i) => <button key={i} onClick={() => 
-                        verificaLetra(letra)}>{letra}</button>)}
+                <div className="botoes">
+                    {alfabeto.map((letra,i) => <button 
+                        className={clicados.includes(letra) ? "habilitado" : "desabilitado"}
+                        key={i} onClick={() => verificaLetra(letra)}>{letra}</button>)}
                 </div>
                 <div className="chute">
                     <p>Já sei a palavra!</p>

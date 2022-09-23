@@ -8,8 +8,11 @@ body{
 
 main {
     display: flex;
-    justify-content: space-between;
-    padding: 30px;
+    padding: 15px;
+}
+
+main img {
+    height: 400px;
 }
 
 
@@ -24,7 +27,6 @@ main button {
     border: none;
     border-radius: 8px;
     margin-top: 60px;
-    margin-right: 120px;
 }
 
 .chute {
@@ -81,7 +83,8 @@ main button {
 
 .desabilitado {
     width: 600px;
-    display: flex;margin: auto;
+    display: flex;
+    margin: auto;
     flex-wrap: wrap;
 }
 
@@ -97,5 +100,15 @@ main button {
     background-color: #9FAAB5;
     border: none;
     border-radius: 5px;
+}
+.esquerda{
+    
+    margin-left: 150px;
+}
+
+.visivel {
+    margin-top: 200px;
+    font-weight: bold;
+    font-size: 20px;
 }
 

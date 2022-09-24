@@ -12,6 +12,7 @@ let palavraEscolhida;
 let palavraEspacada=[];
 let errou=0;
 let acertou=0;
+let num;
 
 export default function App() {
 
@@ -19,10 +20,11 @@ export default function App() {
     const [colocaTraco, setColoca]=React.useState([" "]);
     const [classeTraco,setClasse]=React.useState("visivel")
     const [clicados, setClicados] = React.useState([]);
+    let [inputChute, setInput]=React.useState("");
     let [img,setImg] = React.useState(forca0)
 
     function escolhePalavra() {
-        let num = Math.floor(Math.random() * palavras.length);
+        num = Math.floor(Math.random() * palavras.length);
         palavraEscolhida = transformaArray(palavras[num]);
         alert(palavraEscolhida)
         setClicados(alfabeto)
@@ -124,6 +126,18 @@ export default function App() {
         }
     }
 
+    function botaoChute(){
+        let palavraChute = inputChute;
+        setInput("");
+        if(palavraChute === palavras[num]){
+            fimJogo("ganhou")
+        }
+        else{
+            fimJogo("perdeu")
+        }
+        
+    }
+
     return (
         <>
             <main>
@@ -145,8 +159,8 @@ export default function App() {
                 </div>
                 <div className="chute">
                     <p>Já sei a palavra!</p>
-                    <input type="text" />
-                    <button>Chutar</button>
+                    <input onChange={event => setInput(event.target.value)} type="text" />
+                    <button onClick={botaoChute}>Chutar</button>
                 </div>
             </footer>
         </>

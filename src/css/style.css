@@ -122,3 +122,24 @@ main button {
     font-size: 20px;
 }
 
+@media (max-width: 614px) {
+    .esquerda {
+        margin-left: 50px;
+    }
+
+    .botoes button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .botoes{
+        padding: 30px;
+
+    }
+
+    .chute {
+        margin-top: 0;
+    }
+}
+
+

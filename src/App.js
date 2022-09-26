@@ -24,9 +24,16 @@ export default function App() {
     let [img,setImg] = React.useState(forca0)
 
     function escolhePalavra() {
+        acertou=0;
+        errou=0;
+        palavraEspacada=[];
+        setImg(forca0)
+        setClasse("visivel")
+        setInput("");
         num = Math.floor(Math.random() * palavras.length);
-        palavraEscolhida = transformaArray(palavras[num]);
-        alert(palavraEscolhida)
+        let palavraIntermediaria = palavras[num];
+        let normalizada = palavraIntermediaria.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        palavraEscolhida = transformaArray(normalizada);
         setClicados(alfabeto)
         ColocaTracos()
     }
@@ -73,13 +80,10 @@ export default function App() {
                 if(letra === palavraEscolhida[i]){
                     novoArray[i]=letra+" ";
                     acertou++;
-                    console.log(acertou)
                 }
             
             }
             setColoca(novoArray)
-            console.log(novoArray)
-            console.log(palavraEspacada)
             if(acertou === palavraEscolhida.length){
                 fimJogo("ganhou")
             }
@@ -120,6 +124,7 @@ export default function App() {
         
         if(estado === "perdeu"){
             setClasse("errou")
+            setImg(forca6)
         }
         else{
             setClasse("ganhou")
@@ -128,7 +133,6 @@ export default function App() {
 
     function botaoChute(){
         let palavraChute = inputChute;
-        setInput("");
         if(palavraChute === palavras[num]){
             fimJogo("ganhou")
         }
@@ -143,7 +147,7 @@ export default function App() {
             <main>
                 <img src={img} alt="" />
                 <div className="esquerda">
-                    <button onClick={escolhePalavra}>Escolher Palavra</button>
+                    <button data-identifier="choose-word" onClick={escolhePalavra}>Escolher Palavra</button>
                     <div className={classeTraco}>
                         {colocaTraco.map((t, i) => (
                             <span key={i}>{t}</span>
@@ -155,12 +159,13 @@ export default function App() {
                 <div className="botoes">
                     {alfabeto.map((letra,i) => <button 
                         className={clicados.includes(letra) ? "habilitado" : "desabilitado"}
-                        key={i} onClick={() => verificaLetra(letra)}>{letra}</button>)}
+                        key={i} 
+                        onClick={() => verificaLetra(letra)}>{letra}</button>)}
                 </div>
                 <div className="chute">
                     <p>Já sei a palavra!</p>
                     <input onChange={event => setInput(event.target.value)} type="text" />
-                    <button onClick={botaoChute}>Chutar</button>
+                    <button data-identifier="guess-button" onClick={botaoChute}>Chutar</button>
                 </div>
             </footer>
         </>

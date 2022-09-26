@@ -145,10 +145,11 @@ export default function App() {
     return (
         <>
             <main>
-                <img src={img} alt="" />
+                <img data-identifier="game-image" src={img} alt="" />
                 <div className="esquerda">
-                    <button data-identifier="choose-word" onClick={escolhePalavra}>Escolher Palavra</button>
-                    <div className={classeTraco}>
+                    <button data-identifier="choose-word" 
+                    onClick={escolhePalavra}>Escolher Palavra</button>
+                    <div data-identifier="word" className={classeTraco} >
                         {colocaTraco.map((t, i) => (
                             <span key={i}>{t}</span>
                         ))}</div>
@@ -157,15 +158,17 @@ export default function App() {
             </main>
             <footer>
                 <div className="botoes">
-                    {alfabeto.map((letra,i) => <button 
+                    {alfabeto.map((letra,i) => <button data-identifier="letter"
                         className={clicados.includes(letra) ? "habilitado" : "desabilitado"}
                         key={i} 
                         onClick={() => verificaLetra(letra)}>{letra}</button>)}
                 </div>
                 <div className="chute">
                     <p>Já sei a palavra!</p>
-                    <input onChange={event => setInput(event.target.value)} type="text" />
-                    <button data-identifier="guess-button" onClick={botaoChute}>Chutar</button>
+                    <input data-identifier="type-guess"
+                    onChange={event => setInput(event.target.value)} type="text" />
+                    <button data-identifier="guess-button" 
+                    onClick={botaoChute}>Chutar</button>
                 </div>
             </footer>
         </>
